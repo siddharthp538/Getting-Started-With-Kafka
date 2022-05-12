@@ -71,3 +71,39 @@ Consumers:
 7) When there are a lot of producers but just one consumer, that triggers an automatically rebalance process where the kafka cluster combined with consumer will attempt to distribute the traffic fairly across brokers.
 8) When key is null , events / message are still guarantee order.
 
+
+Anything that is not a broker is producer / consumer or both.
+
+Kafka Connect:
+1) Kafka Connect is used to put data from other legacy databases to Kafka topics and vice versa. This is done via Kafka Connect.
+2) Source connecter acts as a producer
+3) Sink Connected acts as a consumer.
+4) It does not run on Brokers
+
+Schema Registery
+1) Schema of domain object change as per need, schema rehis
+2) Standlone server process external to Kafta Brokers ( kafka cluster acts as a producer or consumer to this process)
+3) It maintains database of schemas
+4) HA deployment options available
+5) It also can act as an API to producer or consumer whether the message they are allowed to produce / consume is compatible with the version that they are expecting
+6) Produce calls the schema registery end point and check if the schema is same as the last message which was produced by the producer. If it is same then prodcue may succeed. If its different than last message but matches compatibility rules produce may still succeed. If compatibility does not match then produce will fail.
+7) Similar thing happens on consumer reading the message
+8) These round trips often gets cached at producer and consumer level. 
+
+
+Kafka Steams:
+1) Functional Java APIs
+2) It performs filtering , grouping, joining etc
+3) Scalable, fault - tolerant state management
+4) Scalable computation based on consumer groups
+5) It manages states off heaps , persists it to local disk, and persists its state to internal topic in Kafka cluster ( consumer groups ) AT SCALE
+6) It alongs with steams , it also exposes its rest point to do stream processing
+
+Ksql DB
+1) A database optimised for stream processing applications
+2) It runs on cluster of its own nodes
+3) It is also present as Java Library
+4) It also lets you connect to Kafka Connectors	
+
+
+
